@@ -46,6 +46,10 @@ jobs:
       vmImage: 'ubuntu-latest'
     timeoutInMinutes: 5
     steps:
+    - bash: |
+       git clone  https://$(amlGitUser):$(amlGitUserToken)@atgmedia.visualstudio.com/DefaultCollection/Product/_git/marketplace-aml $HOME/marketplace-aml
+      displayName: Clone aml repository
+
     - task: KubernetesManifest@0
       displayName: Scale slaves to $(scale_down_replicas)
       inputs:
