@@ -49,6 +49,7 @@ jobs:
     - bash: |
        git clone  https://$(amlGitUser):$(amlGitUserToken)@atgmedia.visualstudio.com/DefaultCollection/Product/_git/marketplace-aml $HOME/marketplace-aml
        ls $HOME/marketplace-aml
+       ls /home/vsts/marketplace-aml/performanceTests/MarketplaceAmlApi.jmx
       displayName: Clone aml repository
 
     - task: KubernetesManifest@0
