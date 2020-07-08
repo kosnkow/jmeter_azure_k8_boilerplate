@@ -54,7 +54,7 @@ jobs:
     displayName: JMeter Tests Regression Pipeline
     pool:
       vmImage: 'ubuntu-latest'
-    timeoutInMinutes: 5
+    timeoutInMinutes: 20
     steps:
     - bash: |
        git clone $(gitRepositoryUrl) $HOME/$(repoName)
