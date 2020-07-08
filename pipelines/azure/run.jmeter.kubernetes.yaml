@@ -38,6 +38,16 @@ variables:
     value: kubernetes/tmp/results.csv
   - name: log
     value: kubernetes/tmp/jmeter.log
+  - name: repoName
+    value: marketplace-aml
+  - name: testRelativePathInRepo
+    value: performanceTests
+  - name: testFolder
+    value: jmx
+  - name: gitBaseUrl
+    value: atgmedia.visualstudio.com/DefaultCollection/Product/_git
+  - name: gitRepositoryUrl
+    value: https://$(amlGitUser):$(amlGitUserToken)@$(gitBaseUrl)/_git/$(repoName)
 
 jobs:
   - job: JMeter_Tests
@@ -47,11 +57,8 @@ jobs:
     timeoutInMinutes: 5
     steps:
     - bash: |
-       git clone  https://$(amlGitUser):$(amlGitUserToken)@atgmedia.visualstudio.com/DefaultCollection/Product/_git/marketplace-aml $HOME/marketplace-aml
-       #ls $HOME/marketplace-aml
-       #ls /home/vsts/marketplace-aml/performanceTests/MarketplaceAmlApi.jmx
-       ls $(System.DefaultWorkingDirectory)/
-       cp $HOME/marketplace-aml/performanceTests/MarketplaceAmlApi.jmx $(System.DefaultWorkingDirectory)/jmx/
+       git clone $(gitRepositoryUrl) $HOME/$(repoName)
+       cp $HOME/$(repoName)/$(testRelativePathInRepo)/$(scenario) $(System.DefaultWorkingDirectory)/$(testFolder)/
       displayName: Clone aml repository
 
     - task: KubernetesManifest@0
@@ -105,7 +112,7 @@ jobs:
       displayName: JMeter tests
       inputs:
         scriptPath: kubernetes/bin/start_test_from_script_params.sh
-        args: $(cluster_namespace) $(scenario) $(data_file) "$(jmeter_args)"
+        args: $(cluster_namespace) $(testFolder)/$(scenario) $(data_file) "$(jmeter_args)"
 
     - task: PublishPipelineArtifact@1
       displayName: Archive JMeter Report
