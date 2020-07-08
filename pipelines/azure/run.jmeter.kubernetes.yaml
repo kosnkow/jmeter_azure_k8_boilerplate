@@ -51,6 +51,7 @@ jobs:
        #ls $HOME/marketplace-aml
        #ls /home/vsts/marketplace-aml/performanceTests/MarketplaceAmlApi.jmx
        ls $(System.DefaultWorkingDirectory)/
+       cp $HOME/marketplace-aml/performanceTests/MarketplaceAmlApi.jmx $(System.DefaultWorkingDirectory)/jmx/
       displayName: Clone aml repository
 
     - task: KubernetesManifest@0
