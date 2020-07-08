@@ -5,11 +5,9 @@ name: $(BuildID)
 trigger: none
 #config
 variables:
-  cluster_namespace: default #edit
-  kubernetesServiceConnection: k8con2 #edit
+  cluster_namespace: tools
+  kubernetesServiceConnection: env-k8s-northeurope (tools)
   scale_down_replicas: 0
-  scale_up_replicas: 3 #not more than k8 nodes number otherwise we have two slaves at 1 VM and likely crash, deployment should be uniform for predictability
-  scale_up_replicas_master: 1
   service: jmeter-slaves
   service-master: jmeter-master
 
