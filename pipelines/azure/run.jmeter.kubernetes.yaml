@@ -12,7 +12,6 @@ variables:
   scale_up_replicas_master: 1
   service: jmeter-slaves
   service-master: jmeter-master
-  scenario: "jmx/test.jmx"
   data_file: "test_data/sample_data.csv"
   threads: 1 #browsers per pod (=node=VM)
   loops: 50
