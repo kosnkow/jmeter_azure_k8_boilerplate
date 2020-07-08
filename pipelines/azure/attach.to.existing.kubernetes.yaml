@@ -5,8 +5,8 @@ name: $(BuildID)
 trigger: none
 #config
 variables:
-  kubernetesServiceConnection: k8con2 #edit
-  namespace: default #edit
+  kubernetesServiceConnection: env-k8s-northeurope (tools)
+  namespace: tools
   service: jmeter-slaves
   service-master: jmeter-master
 
