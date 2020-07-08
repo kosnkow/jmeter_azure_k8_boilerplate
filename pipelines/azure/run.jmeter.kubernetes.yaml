@@ -5,21 +5,39 @@ name: $(BuildID)
 trigger: none
 #config
 variables:
-  cluster_namespace: tools
-  kubernetesServiceConnection: env-k8s-northeurope (tools)
-  scale_down_replicas: 0
-  scale_up_replicas: 2 #not more than k8 nodes number otherwise we have two slaves at 1 VM and likely crash, deployment should be uniform for predictability
-  scale_up_replicas_master: 1
-  service: jmeter-slaves
-  service-master: jmeter-master
-  data_file: "test_data/sample_data.csv"
-  threads: 1 #browsers per pod (=node=VM)
-  loops: 50
-  jmeter_args: "-Gthreads=$(threads) -Gloops=$(loops)"
-  report_dir: kubernetes/tmp/report
-  results: kubernetes/tmp/results.csv
-  log: kubernetes/tmp/jmeter.log
-
+  - group: performance-secrets
+  - name: amlGitUser
+    value: $(amlGitUserName)
+  - name: amlGitUserToken
+    value: $(amlGitToken)
+  - name: cluster_namespace
+    value: tools
+  - name: kubernetesServiceConnection
+    value: env-k8s-northeurope (tools)
+  - name: scale_down_replicas
+    value: 0
+  - name: scale_up_replicas
+    value: 2 #not more than k8 nodes number otherwise we have two slaves at 1 VM and likely crash, deployment should be uniform for predictability
+  - name: scale_up_replicas_master
+    value: 1
+  - name: service
+    value: jmeter-slaves
+  - name: service-master
+    value: jmeter-master
+  - name: data_file
+    value: "test_data/sample_data.csv"
+  - name: threads
+    value: 1 #browsers per pod (=node=VM)
+  - name: loops
+    value: 50
+  - name: jmeter_args
+    value: "-Gthreads=$(threads) -Gloops=$(loops)"
+  - name: report_dir
+    value: kubernetes/tmp/report
+  - name: results
+    value: kubernetes/tmp/results.csv
+  - name: log
+    value: kubernetes/tmp/jmeter.log
 
 jobs:
   - job: JMeter_Tests
